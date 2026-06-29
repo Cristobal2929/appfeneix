@@ -11,6 +11,8 @@ import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONObject
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,8 +37,9 @@ class MainActivity : AppCompatActivity() {
     private fun translateText(text: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val client = OkHttpClient()
+            val encodedText = URLEncoder.encode(text, StandardCharsets.UTF_8.toString())
             val request = Request.Builder()
-                .url("https://api.example.com/translate?text=${text.encodeToUriComponent()}&target=es")
+                .url("https://api.example.com/translate?text=$encodedText&target=es")
                 .build()
 
             try {
