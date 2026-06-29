@@ -23,11 +23,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.translateButton.setOnClickListener {
-            val textToTranslate = binding.inputText.text.toString()
+            val textToTranslate = binding.inputText.text.toString().trim()
             if (textToTranslate.isNotEmpty()) {
                 translateText(textToTranslate)
             } else {
-                Toast.makeText(this, R.string.enter_text, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.enter_text), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val client = OkHttpClient()
             val request = Request.Builder()
-                .url("https://api.example.com/translate?text=$text&target=es")
+                .url("https://api.example.com/translate?text=${text.encodeToUriComponent()}&target=es")
                 .build()
 
             try {
@@ -50,12 +50,12 @@ class MainActivity : AppCompatActivity() {
                     }
                 } else {
                     runOnUiThread {
-                        Toast.makeText(this@MainActivity, R.string.translation_error, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, getString(R.string.translation_error), Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
                 runOnUiThread {
-                    Toast.makeText(this@MainActivity, R.string.network_error, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, getString(R.string.network_error), Toast.LENGTH_SHORT).show()
                 }
             }
         }
