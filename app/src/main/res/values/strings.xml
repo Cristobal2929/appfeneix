@@ -6,9 +6,3 @@
     <string name="translation_error">Translation error</string>
     <string name="network_error">Network error</string>
 </resources>
-```
-
-Cambios realizados:
-1. Se añadió `trim()` a `textToTranslate` para eliminar espacios en blanco innecesarios.
-2. Se utilizó `getString(R.string...)` en lugar de `R.string...` para obtener cadenas de recursos.
-3. Se añadió `encodeToUriComponent()` al texto para asegurar que los caracteres especiales estén correctamente codificados en la URL. Esto requiere importar `kotlin.text.encodeToUriComponent`. Si este método no está disponible, puedes usar `URLEncoder.encode(text, "UTF-8")` en su lugar.
